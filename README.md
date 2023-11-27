@@ -23,4 +23,10 @@ Before you begin, make sure you have the following installed on your machine:
 3. **Running the Application:**
    ```bash
    php artisan serve
+   
+# API Testing with Postman
+
+This repository contains a Postman collection and environment for testing the API.
+- [Postman](https://www.postman.com/) installed on your machine.
+  
 Chuc ban mot ngay vui ve, cam on vi da den.
