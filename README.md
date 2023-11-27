@@ -23,7 +23,28 @@ Before you begin, make sure you have the following installed on your machine:
 3. **Running the Application:**
    ```bash
    php artisan serve
-   
+
+## Work with existing database
+
+If you have database installed on your machine (ex: MySQL), please edit your .env file like this:
+   ```dotenv
+   DB_CONNECTION=your_database_connection
+   DB_HOST=your_database_host
+   DB_PORT=your_database_port
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_database_username
+   DB_PASSWORD=your_database_password
+   ```
+Example:
+   ```dotenv
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=carrental
+   DB_USERNAME=root
+   DB_PASSWORD="root"
+   ```
+
 # API Testing with Postman
 
 This repository contains a Postman collection and environment for testing the API.
