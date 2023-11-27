@@ -27,6 +27,6 @@ Before you begin, make sure you have the following installed on your machine:
 # API Testing with Postman
 
 This repository contains a Postman collection and environment for testing the API.
-- [Postman](https://www.postman.com/) installed on your machine.
+- Dowload [Postman](https://www.postman.com/) to start testing the API.
   
 Chuc ban mot ngay vui ve, cam on vi da den.
