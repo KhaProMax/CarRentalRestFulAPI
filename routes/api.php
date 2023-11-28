@@ -11,31 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-// Car
-// Route::resource('cars', CarController::class)->only(['index','show']);
-// // User
-// Route::resource('users', UserController::class);
-// //
-// Route::resource('contracts', ContractController::class);
-// Route::resource('carfeatures', CarFeatureController::class);
-// Route::resource('car_owners', CarOwnerController::class);
-// Route::resource('prices', PriceController::class);
-// Route::resource('comments', CommentController::class);
-
-Route::get('/cars', [CarController::class, 'index']);
-Route::post('/car', [CarController::class, 'store']);
-
 Route::get('/check-database', function () {
     try {
         DB::connection()->getPdo();
@@ -44,3 +19,9 @@ Route::get('/check-database', function () {
         return "Database connection failed: " . $e->getMessage();
     }
 });
+
+// Car
+Route::get('/cars', [CarController::class, 'index']);
+
+Route::post('/car', [CarController::class, 'store']);
+

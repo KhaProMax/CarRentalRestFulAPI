@@ -10,8 +10,11 @@ class User extends Model
 {
     use HasFactory;
 
-    // protected $fillable = ['name', 'email','password'];
-    // protected $hidden = ['password'];
+    protected $table = 'user';
+
+    protected $fillable = ['USER_ID', 'PASSWORD','FIRST_NAME', 'LAST_NAME', 'DOB', 'GENDER', 'SDT', 'EMAIL', 'GPLX'];
+    protected $hidden = ['PASSWORD'];
+
 
     // FK Contract -> User
     public function contract(): HasOne { 
