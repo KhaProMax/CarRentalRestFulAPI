@@ -12,8 +12,8 @@ class User extends Model
 
     protected $table = 'user';
 
-    // protected $fillable = ['USER_ID', 'PASSWORD','FIRST_NAME', 'LAST_NAME', 'DOB', 'GENDER', 'SDT', 'EMAIL', 'GPLX'];
-    // protected $hidden = ['PASSWORD'];
+    protected $fillable = ['USER_ID', 'PASSWORD','FIRST_NAME', 'LAST_NAME', 'DOB', 'GENDER', 'SDT', 'EMAIL', 'GPLX'];
+    protected $hidden = ['PASSWORD'];///dasdasd
 
 
     // FK Contract -> User
