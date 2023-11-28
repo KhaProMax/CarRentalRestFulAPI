@@ -31,7 +31,7 @@ class User extends Model
         return $this->hasOne(CarOwner::class);
     }
 
-    //FK Comment-> User
+    //FK Comment-> Userds
     public function comment(): HasOne {
         return $this->hasOne(Comment::class);
     }
