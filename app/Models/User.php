@@ -15,7 +15,7 @@ class User extends Model
     protected $fillable = ['USER_ID', 'PASSWORD','FIRST_NAME', 'LAST_NAME', 'DOB', 'GENDER', 'SDT', 'EMAIL', 'GPLX'];
     protected $hidden = ['PASSWORD'];
     // test
-
+    //test 11111111
 
     // FK Contract -> User
     public function contract(): HasOne { 
