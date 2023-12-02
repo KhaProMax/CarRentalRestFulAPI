@@ -28,6 +28,7 @@ class Car extends Model
         'DESCRIPTION',
     ];
     
+    public $incrementing = false;
     public $timestamps = false;
 
     //FK CarFeature -> Car

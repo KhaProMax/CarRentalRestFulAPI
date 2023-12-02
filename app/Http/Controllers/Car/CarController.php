@@ -18,6 +18,7 @@ class CarController extends Controller
 
         return response()->json(['message' => "Get cars sucsessfully!", 'cars' => $cars], 200);
     }
+    //
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +36,7 @@ class CarController extends Controller
     public function show(string $id)
     {
         //
-        // $car = Car::findOrFail($id);
+        $car = Car::findOrFail($id);  
     }
 
     /**

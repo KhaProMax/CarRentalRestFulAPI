@@ -12,9 +12,22 @@ class User extends Model
 
     protected $table = 'user';
 
-    protected $fillable = ['USER_ID', 'PASSWORD','FIRST_NAME', 'LAST_NAME', 'DOB', 'GENDER', 'SDT', 'EMAIL', 'GPLX'];
-    protected $hidden = ['PASSWORD'];///dasdasd
+    protected $primaryKey = 'USER_ID';
 
+    protected $fillable = ['USER_ID', 'PASSWORD','FIRST_NAME', 'LAST_NAME', 'DOB', 'GENDER', 'SDT', 'EMAIL', 'GPLX'];
+    // protected $hidden = ['PASSWORD'];
+
+    public $incrementing = false;
+    public $timestamps = false;
+
+    public static function generateUniqueId()
+    {
+        return "user" . time();
+    }
+
+    public function hasLicense() {
+        return $this->GPLX == null;
+    }
 
     // FK Contract -> User
     public function contract(): HasOne { 
