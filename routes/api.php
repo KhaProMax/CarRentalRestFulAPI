@@ -19,9 +19,13 @@ Route::get('/check-database', function () {
         return "Database connection failed: " . $e->getMessage();
     }
 });
-
 // Car
-Route::get('/cars', [CarController::class, 'index']);
+Route::get('/cars', [CarController::class,'index']);
 
 Route::post('/car', [CarController::class, 'store']);
 
+//User
+Route::get('/users', [UserController::class,'index']);
+Route::get('/user/{user_id}', [UserController::class,'show']);
+Route::post('/user', [UserController::class, 'store']);
+Route::put('/user/{user_id}', [UserController::class,'update']);
