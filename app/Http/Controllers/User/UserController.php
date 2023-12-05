@@ -4,9 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class UserController extends Controller
 {
@@ -61,10 +59,6 @@ class UserController extends Controller
         //
         $user = User::findOrFail($id);
 
-        if (!$user) {
-            return response()->json(['error' => "User not found"], 404);
-        }
-
         return response()->json(['message' => 'Query successfully!', 'data' => $user], 200);
     }
 
@@ -74,11 +68,7 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['error' => "User not found"], 404);
-        }
+        $user = User::findOrFail($id);
 
         $rules = [
             'FIRST_NAME' => 'string',
@@ -141,11 +131,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['error' => "User not found"], 404);
-        }
+        $user = User::findOrFail($id);
 
         $user->delete();
 
