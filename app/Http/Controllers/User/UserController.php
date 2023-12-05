@@ -42,26 +42,7 @@ class UserController extends Controller
             'GPLX' => 'string'
         ];
 
-        $customMessages = [
-            'FIRST_NAME.required' => 'The FIRST_NAME field is required.',
-            'LAST_NAME.required' => 'The LAST_NAME field is required.',
-            'EMAIL.required' => 'The EMAIL field is required.',
-            'EMAIL.email' => 'Please provide a valid EMAIL address.',
-            'EMAIL.unique' => 'The EMAIL address is already taken.',
-            'PASSWORD.required' => 'The PASSWORD field is required.',
-            'DOB.date' => 'The date of birth must be a valid date.',
-            'DOB.date_format' => 'The date of birth must be in the Y-m-d format.',
-            'GENDER.in' => 'The GENDER must be either F or M.',
-            'SDT.numeric' => 'The phone number must contain only numeric characters.',
-            'SDT.min' => 'The phone number must be at least 6 digits.',
-        ];
-
-        // Validate the request data
-        $validator = FacadesValidator::make($request->all(), $rules, $customMessages);
-
-        if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()], 422);
-        }
+        $request->validate($rules);
 
         // 
         $data = $request->all();
@@ -110,22 +91,8 @@ class UserController extends Controller
             'GPLX' => 'string'
         ];
 
-        $customMessages = [
-            'EMAIL.email' => 'Please provide a valid EMAIL address.',
-            'EMAIL.unique' => 'The EMAIL address is already taken.',
-            'DOB.date' => 'The date of birth must be a valid date.',
-            'DOB.date_format' => 'The date of birth must be in the Y-m-d format.',
-            'GENDER.in' => 'The GENDER must be either F or M.',
-            'SDT.numeric' => 'The phone number must contain only numeric characters.',
-            'SDT.min' => 'The phone number must be at least 6 digits.',
-        ];
-
         // Validate the request data
-        $validator = FacadesValidator::make($request->all(), $rules, $customMessages);
-
-        if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()], 422);
-        }
+        $request->validate($rules);
 
         if ($request->has('FIRST_NAME')) {
             $user->FIRST_NAME =  $request->FIRST_NAME;
