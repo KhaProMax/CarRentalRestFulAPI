@@ -76,9 +76,12 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => "The specific URL cannot be found", 'statusCode' => 404], 404);
         }
 
-        return response()->json(['error'=> "Oops! Something went wrong.",'statusCode'=> 500]);
+        if($exception instanceof QueryException) {
+            return response()->json(['error'=> "Query data failed!", 'exception' => $exception->errorInfo[2], 'statusCode'=> 23000], 404);
 
-        // return parent::render($request, $exception);
+        }
+
+        return parent::render($request, $exception);
     }
 
     /**

@@ -16,7 +16,7 @@ class UserController extends Controller
         //
         $users = User::all();
 
-        if (!$users->isEmpty()) {
+        if ($users->isEmpty()) {
             return response()->json(['message' => 'No users found'], 404);
         }
 
@@ -30,6 +30,7 @@ class UserController extends Controller
     {
         // Validate exist
         $rules = [
+            'USER_ID' => 'unique',
             'FIRST_NAME' => 'required|string',
             'LAST_NAME' => 'required|string',
             'EMAIL' => 'required|email|unique:user,email',
@@ -115,6 +116,8 @@ class UserController extends Controller
         if ($request->has('PASSWORD')) {
             $user->PASSWORD = bcrypt($request->PASSWORD);
         }
+
+        $user->car()->update(['OWNER_ID' => $user->USER_ID]);
 
         if (!$user->isDirty()) {
             return response()->json(['error' => 'Your input values are the same in database system, nothing changed', 'data' => $user], 409);
