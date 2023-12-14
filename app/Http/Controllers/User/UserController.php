@@ -57,7 +57,6 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
         $user = User::findOrFail($id);
 
         return response()->json(['message' => 'Query successfully!', 'data' => $user], 200);
@@ -139,5 +138,22 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json(['message' => 'User deleted successfully!', 'data' => $user], 200);
+    }
+
+    /**
+     * Filter users based on request.
+     */
+    public function filter(Request $request) {
+        $filters = $request->json()->all();
+
+        $users = User::query();
+
+        foreach ($filters as $key => $value) {
+            $users->where($key, $value);
+        }
+
+        $filteredUsers = $users->get();
+
+        return response()->json(['message' => 'Cars retreived successfully!', 'data' => $filteredUsers], 200);
     }
 }

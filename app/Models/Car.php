@@ -41,9 +41,19 @@ class Car extends Model
         return $this->hasMany(Contract::class, 'LICENSE_PLATE', 'LICENSE_PLATE');
     }
 
+    // FK Bookmark -> Car
+    public function bookmark(): HasMany {
+        return $this->hasMany(Contract::class, 'LICENSE_PLATE', 'LICENSE_PLATE');
+    }
+
     // FK Car -> User
-    // public function user(): BelongsTo
-    // {
-    //     return $this->belongsTo(User::class, 'OWNER_ID', 'USER_ID');
-    // }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'OWNER_ID', 'USER_ID');
+    }
+
+    // FK Comment -> Car
+    public function comment(): HasMany {
+        return $this->hasMany(Comment::class, 'LICENSE_PLATE', 'LICENSE_PLATE');
+    }
 }

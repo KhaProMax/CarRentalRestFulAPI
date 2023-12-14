@@ -21,6 +21,8 @@ Route::get('/car/{LICENSE_PLATE}', [CarController::class,'show']);
 Route::post('/car', [CarController::class, 'store']);
 Route::put('/car/{LICENSE_PLATE}', [CarController::class,'update']);
 Route::delete('/car/{LICENSE_PLATE}', [CarController::class,'destroy']);
+Route::post('/car/filter', [CarController::class,'filter']);
+Route::get('/car/ofowner/{OWNER_ID}', [CarController::class,'getCarsOfOwner']);
 
 //User
 Route::get('/users', [UserController::class,'index']);
@@ -35,3 +37,4 @@ Route::get('/contract/{contract_id}', [ContractController::class,'show']);
 Route::post('/contract', [ContractController::class, 'store']);
 Route::put('/contract/{contract_id}', [ContractController::class,'update']);
 Route::delete('/contract/{contract_id}', [ContractController::class,'destroy']);
+Route::post('/contract/filter', [ContractController::class,'filter']);

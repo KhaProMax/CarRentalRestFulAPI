@@ -287,4 +287,30 @@ class CarController extends Controller
 
         return response()->json(['message' => 'Car deleted successfully!', 'data' => $car], 200);
     }
+
+    /**
+     * Show xe cua 1 user bat ky.
+     */
+    public function getCarsOfOwner(string $owner_id) {
+        $cars = Car::where('OWNER_ID', $owner_id)-> get();
+
+        return response()->json(['message' => 'Cars retreived successfully!', 'data' => $cars], 200);
+    }
+
+    /**
+     * Filter cars based on request.
+     */
+    public function filter(Request $request) {
+        $filters = $request->json()->all();
+
+        $cars = Car::query();
+
+        foreach ($filters as $key => $value) {
+            $cars->where($key, $value);
+        }
+        
+        $filteredCars = $cars->skip(2)->take(2)->get();
+
+        return response()->json(['message' => 'Cars retreived successfully!', 'data' => $filteredCars], 200);
+    }
 }

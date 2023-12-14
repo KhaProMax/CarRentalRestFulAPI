@@ -35,8 +35,18 @@ class User extends Model
         return $this->hasMany(Contract::class);
     }
 
+    // FK Bookmark -> User
+    public function bookmark(): HasMany {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    // FK Comment -> User
+    public function comment(): HasMany {
+        return $this->hasMany(Comment::class);
+    }
+
     // FK Car -> User
-    // public function car(): HasMany {
-    //     return $this->hasMany(Car::class);
-    // }
+    public function car(): HasMany {
+        return $this->hasMany(Car::class);
+    }
 }

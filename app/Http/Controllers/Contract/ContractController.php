@@ -53,10 +53,10 @@ class ContractController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $user_id)
     {
         //
-        $contract = Contract::findOrFail($id);
+        $contract = Contract::findOrFail($user_id);
 
         return response()->json(['message' => 'Query successfully!', 'data' => $contract], 200);
     }
@@ -123,5 +123,22 @@ class ContractController extends Controller
         $contract->delete();
 
         return response()->json(['message' => 'Contract deleted successfully!', 'data' => $contract], 200);
+    }
+
+    /**
+     * Filter users based on request.
+     */
+    public function filter(Request $request) {
+        $filters = $request->json()->all();
+
+        $contracts = Contract::query();
+
+        foreach ($filters as $key => $value) {
+            $contracts->where($key, $value);
+        }
+
+        $filteredContracts = $contracts->get();
+
+        return response()->json(['message' => 'Cars retreived successfully!', 'data' => $filteredContracts], 200);
     }
 }
