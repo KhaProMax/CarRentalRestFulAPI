@@ -16,6 +16,7 @@ class User extends Model
     protected $primaryKey = 'USER_ID';
 
     protected $fillable = ['USER_ID', 'PASSWORD','FIRST_NAME', 'LAST_NAME', 'DOB', 'GENDER', 'SDT', 'EMAIL', 'GPLX'];
+
     // protected $hidden = ['PASSWORD'];
 
     public $incrementing = false;

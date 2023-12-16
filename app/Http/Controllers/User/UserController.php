@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -155,5 +156,16 @@ class UserController extends Controller
         $filteredUsers = $users->get();
 
         return response()->json(['message' => 'Cars retreived successfully!', 'data' => $filteredUsers], 200);
+    }
+
+    public function login(Request $request) {
+        $user = User::where('email', $request->email)->first();
+
+        if($user && Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => "Login successfully!", 'data' => $user], 200);
+        }
+        else {
+            return response()->json(['message'=> 'Login failed, check your email or password!', 'data'=> $user], 403);
+        }
     }
 }
