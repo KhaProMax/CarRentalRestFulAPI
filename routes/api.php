@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Car\CarController;
+use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\CompanyRevenue\CompanyRevenueController;
 use App\Http\Controllers\Contract\ContractController;
 use App\Http\Controllers\Momo\MomoPaymentController;
+use App\Http\Controllers\Stripe\StripeController;
 use App\Http\Controllers\Timer\TimerController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
@@ -60,11 +63,13 @@ Format of Request Object
 */
 // Car
 Route::get('/cars', [CarController::class, 'index']);
+Route::post('/cars/searchcar', [CarController::class, 'searchcar']);
 Route::get('/car/{LICENSE_PLATE}', [CarController::class, 'show']);
 Route::post('/car', [CarController::class, 'store']);
 Route::put('/car/{LICENSE_PLATE}', [CarController::class, 'update']);
 Route::delete('/car/{LICENSE_PLATE}', [CarController::class, 'destroy']);
 Route::post('/car/filter', [CarController::class, 'filter']);
+Route::post('/car/filterArea', [CarController::class, 'filterArea']);
 Route::get('/car/ofowner/{OWNER_ID}', [CarController::class, 'getCarsOfOwner']);
 
 // Format of Request Object
@@ -90,6 +95,7 @@ Route::put('/user/{user_id}', [UserController::class, 'update']);
 Route::delete('/user/{user_id}', [UserController::class, 'destroy']);
 Route::post('/user/filter', [UserController::class, 'filter']);
 Route::post('/user/login', [UserController::class,'login']);
+Route::get('/user/revenue/{user_id}', [UserController::class,'revenue']);
 
 // Contract Rent
 Route::get('/contracts', [ContractController::class, 'index']);
@@ -100,14 +106,20 @@ Route::delete('/contract/{contract_id}', [ContractController::class, 'destroy'])
 Route::post('/contract/filter', [ContractController::class, 'filter']);
 
 // Comment
-Route::get('/comments', [ContractController::class, 'index']);
-Route::post('/comment', [ContractController::class, 'store']);
-Route::put('/comment', [ContractController::class, 'update']);
-Route::delete('/comment', [ContractController::class, 'destroy']);
-Route::post('/comment/filter', [ContractController::class, 'filter']);
+Route::get('/comments', [CommentController::class, 'index']);
+Route::get('/comment/{LICENSE_PLATE}', [CommentController::class, 'show']);
+Route::post('/comment', [CommentController::class, 'store']);
+Route::put('/comment', [CommentController::class, 'update']);
+Route::delete('/comment', [CommentController::class, 'destroy']);
+Route::post('/comment/filter', [CommentController::class, 'filter']);
+
+// Company Revenue
+Route::get('/com_revenue/getDay/{dateString}', [CompanyRevenueController::class,'belongsToDay']);
+Route::get('/com_revenue/getMonth/{monthString}', [CompanyRevenueController::class,'belongsToMonth']);
+Route::get('/com_revenue/getYear/{yearString}', [CompanyRevenueController::class,'belongsToYear']);
 
 // GetTimer
 Route::get('/timer/{user_id}', [TimerController::class, 'getTimer']);
 
 // Payment MOMO
-Route::post('/momo_payment', [MomoPaymentController::class, 'momo_payment']);
+Route::post('/stripe_payment', [StripeController::class, 'session']);

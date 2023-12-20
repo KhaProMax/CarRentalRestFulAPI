@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Car;
 
 use App\Http\Controllers\Controller;
 use App\Models\Car;
+use App\Models\Comment;
 use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,9 +14,9 @@ class CarController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        //        
         $cars = Car::all();
 
         if ($cars->isEmpty()) {
@@ -23,10 +24,19 @@ class CarController extends Controller
         }
 
         foreach ($cars as $car) {
-            $contracts = Contract::where('LICENSE_PLATE', $car->LICENSE_PLATE)->get();
-            foreach( $contracts as $contract ) { 
-                $car->IS_AVAILABLE = $car->isAvailable($contract->START_DATE, $contract->END_DATE);
+            $car->IS_AVAILABLE = true;
+
+            $contract = Contract::where('LICENSE_PLATE', $car->LICENSE_PLATE)->where('RETURN_STATUS', "N")->get();
+            if (!$contract->isEmpty()) {
+                $car->IS_AVAILABLE = false;
             }
+
+            $numberRent = Contract::where('LICENSE_PLATE', $car->LICENSE_PLATE)->where('RETURN_STATUS', "Y")->count();
+            $star = Comment::where('LICENSE_PLATE', $car->LICENSE_PLATE)->avg('REVIEW');
+
+            $car->STAR = round($star, 1);
+            $car->TRIP = $numberRent;
+            $car->user;
         }
 
         return response()->json(['message' => 'Cars retreived successfully!', 'data' => $cars], 200);
@@ -99,6 +109,14 @@ class CarController extends Controller
     {
         //
         $car = Car::findOrFail($id);
+
+        $numberRent = Contract::where('LICENSE_PLATE', $car->LICENSE_PLATE)->where('RETURN_STATUS', "Y")->count();
+        $star = Comment::where('LICENSE_PLATE', $car->LICENSE_PLATE)->avg('REVIEW');
+
+        $car->STAR = round($star, 1);
+        $car->TRIP = $numberRent;
+
+        $car->user;
 
         return response()->json(['message' => 'Query successfully!', 'data' => $car], 200);
     }
@@ -291,8 +309,9 @@ class CarController extends Controller
     /**
      * Show xe cua 1 user bat ky.
      */
-    public function getCarsOfOwner(string $owner_id) {
-        $cars = Car::where('OWNER_ID', $owner_id)-> get();
+    public function getCarsOfOwner(string $owner_id)
+    {
+        $cars = Car::where('OWNER_ID', $owner_id)->get();
 
         return response()->json(['message' => 'Cars retreived successfully!', 'data' => $cars], 200);
     }
@@ -300,7 +319,8 @@ class CarController extends Controller
     /**
      * Filter cars based on request.
      */
-    public function filter(Request $request) {
+    public function filter(Request $request)
+    {
         $filters = $request->json()->all();
 
         $cars = Car::query();
@@ -308,9 +328,18 @@ class CarController extends Controller
         foreach ($filters as $key => $value) {
             $cars->where($key, $value);
         }
-        
+
         $filteredCars = $cars->skip(2)->take(2)->get();
 
         return response()->json(['message' => 'Cars retreived successfully!', 'data' => $filteredCars], 200);
+    }
+
+    public function searchcar(Request $request)
+    {
+        $filters = $request->json()->all();
+
+        dd($filters);
+
+        return response()->json(['message' => 'Cars retreived successfully!', 'data' => $filters], 200);
     }
 }

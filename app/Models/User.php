@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -49,5 +50,14 @@ class User extends Model
     // FK Car -> User
     public function car(): HasMany {
         return $this->hasMany(Car::class);
+    }
+
+    // FK CarOwner -> User
+    public function carowner(): HasMany {
+        return $this->hasMany(CarOwner::class);
+    }
+
+    public function revenue():HasMany {
+        return $this->hasMany(Owner_Revenue::class);
     }
 }

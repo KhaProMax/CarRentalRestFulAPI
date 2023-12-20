@@ -11,7 +11,8 @@
         "laravel/homestead": "^14.5",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "laravel/ui": "^4.2"
+        "laravel/ui": "^4.2",
+        "stripe/stripe-php": "^13.6"
     },
     "require-dev": {
         "bennett-treptow/laravel-migration-generator": "^4.3",

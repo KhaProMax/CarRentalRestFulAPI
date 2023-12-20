@@ -117,8 +117,6 @@ class UserController extends Controller
             $user->PASSWORD = bcrypt($request->PASSWORD);
         }
 
-        $user->car()->update(['OWNER_ID' => $user->USER_ID]);
-
         if (!$user->isDirty()) {
             return response()->json(['error' => 'Your input values are the same in database system, nothing changed', 'data' => $user], 409);
         }
@@ -167,5 +165,13 @@ class UserController extends Controller
         else {
             return response()->json(['message'=> 'Login failed, check your email or password!', 'data'=> $user], 403);
         }
+    }
+
+    public function revenue(string $user_id) {
+        $user = User::find($user_id);
+
+        $revenues = $user->revenue;
+
+        return response()->json(['message' => 'All record of revenue', 'data' => $revenues], 200);
     }
 }

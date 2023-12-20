@@ -50,10 +50,10 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $user_id)
+    public function show(string $LICENSE_PLATE)
     {
         //
-        $Comment = Comment::where('USER_ID', $user_id)->get();
+        $Comment = Comment::where('LICENSE_PLATE', $LICENSE_PLATE)->get();
 
         return response()->json(['message' => 'Query successfully!', 'data' => $Comment], 200);
     }
@@ -116,5 +116,22 @@ class CommentController extends Controller
         $Comments->delete();
 
         return response()->json(['message' => 'Comment deleted successfully!', 'data' => $Comments], 200);
+    }
+
+    /**
+     * Filter users based on request.
+     */
+    public function filter(Request $request) {
+        $filters = $request->json()->all();
+
+        $comments = Comment::query();
+
+        foreach ($filters as $key => $value) {
+            $comments->where($key, $value);
+        }
+
+        $filteredComments = $comments->get();
+
+        return response()->json(['message' => 'Comments retreived successfully!', 'data' => $filteredComments], 200);
     }
 }

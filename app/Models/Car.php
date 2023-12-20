@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -49,7 +50,12 @@ class Car extends Model
     // FK Car -> User
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'OWNER_ID', 'USER_ID');
+        return $this->belongsTo(User::class,'OWNER_ID', 'USER_ID');
+    }
+
+    // FK CarOnwer -> Car
+    public function carowner(): HasOne { 
+        return $this->hasOne(CarOwner::class);
     }
 
     // FK Comment -> Car
