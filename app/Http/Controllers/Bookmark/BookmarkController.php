@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Bookmark;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bookmark;
+use App\Models\Car;
 use Illuminate\Http\Request;
 
 class BookmarkController extends Controller
@@ -50,9 +51,10 @@ class BookmarkController extends Controller
     public function show(string $user_id)
     {
         //
-        $bookmark = Bookmark::where('USER_ID', $user_id)->get();
-
-        return response()->json(['message' => 'Query successfully!', 'data' => $bookmark], 200);
+        $bookmarks = Bookmark::where('USER_ID', $user_id)->join('car', 'bookmark.LICENSE_PLATE', '=', 'car.LICENSE_PLATE')
+        ->select('bookmark.*', 'car.*')->get();
+        
+        return response()->json(['message' => 'Query successfully!', 'data' => $bookmarks], 200);
     }
 
     // /**
