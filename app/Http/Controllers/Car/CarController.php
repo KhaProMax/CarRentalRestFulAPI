@@ -16,8 +16,13 @@ class CarController extends Controller
      */
     public function index(Request $request)
     {
-        //        
-        $cars = Car::all();
+        //
+        $location = $request->location;
+
+        if (!$location) {
+            $cars = Car::all();
+        } else
+            $cars = Car::where('LOCATION', $location)->get();
 
         if ($cars->isEmpty()) {
             return response()->json(['message' => 'No cars found'], 404);
@@ -34,7 +39,7 @@ class CarController extends Controller
             $numberRent = Contract::where('LICENSE_PLATE', $car->LICENSE_PLATE)->where('RETURN_STATUS', "Y")->count();
             $star = Comment::where('LICENSE_PLATE', $car->LICENSE_PLATE)->avg('REVIEW');
 
-            $car->STAR = round($star, 1);
+            $car->STAR = ($numberRent > 0) ? round($star, 1) : 0;
             $car->TRIP = $numberRent;
             $car->user;
         }

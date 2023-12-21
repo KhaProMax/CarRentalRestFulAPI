@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Bookmark\BookmarkController;
 use App\Http\Controllers\Car\CarController;
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\CompanyRevenue\CompanyRevenueController;
@@ -61,19 +62,19 @@ Format of Request Object
     "RIGHT_IMG": "VinFast-R"
 }
 */
-// Car
-Route::get('/cars', [CarController::class, 'index']);
-Route::post('/cars/searchcar', [CarController::class, 'searchcar']);
-Route::get('/car/{LICENSE_PLATE}', [CarController::class, 'show']);
-Route::post('/car', [CarController::class, 'store']);
-Route::put('/car/{LICENSE_PLATE}', [CarController::class, 'update']);
-Route::delete('/car/{LICENSE_PLATE}', [CarController::class, 'destroy']);
-Route::post('/car/filter', [CarController::class, 'filter']);
-Route::post('/car/filterArea', [CarController::class, 'filterArea']);
-Route::get('/car/ofowner/{OWNER_ID}', [CarController::class, 'getCarsOfOwner']);
+Route::middleware(['cors'])->group(function () {
+    Route::get('/cars', [CarController::class, 'index']);
+    Route::post('/cars/searchcar', [CarController::class, 'searchcar']);
+    Route::get('/car/{LICENSE_PLATE}', [CarController::class, 'show']);
+    Route::post('/car', [CarController::class, 'store']);
+    Route::put('/car/{LICENSE_PLATE}', [CarController::class, 'update']);
+    Route::delete('/car/{LICENSE_PLATE}', [CarController::class, 'destroy']);
+    Route::post('/car/filter', [CarController::class, 'filter']);
+    Route::post('/car/filterArea', [CarController::class, 'filterArea']);
+    Route::get('/car/ofowner/{OWNER_ID}', [CarController::class, 'getCarsOfOwner']);
 
-// Format of Request Object
-/*
+    // Format of Request Object
+    /*
 {
     "USER_ID": "U0048", [Create automatically, readonly] [required]
     "PASSWORD": "password48", [required]
@@ -87,39 +88,44 @@ Route::get('/car/ofowner/{OWNER_ID}', [CarController::class, 'getCarsOfOwner']);
     "LOCATION": "Hồ Chí Minh"
 }
 */
-//User
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/user/{user_id}', [UserController::class, 'show']);
-Route::post('/user/register', [UserController::class, 'store']);
-Route::put('/user/{user_id}', [UserController::class, 'update']);
-Route::delete('/user/{user_id}', [UserController::class, 'destroy']);
-Route::post('/user/filter', [UserController::class, 'filter']);
-Route::post('/user/login', [UserController::class,'login']);
-Route::get('/user/revenue/{user_id}', [UserController::class,'revenue']);
+    //User
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/user/{user_id}', [UserController::class, 'show']);
+    Route::post('/user/register', [UserController::class, 'store']);
+    Route::put('/user/{user_id}', [UserController::class, 'update']);
+    Route::delete('/user/{user_id}', [UserController::class, 'destroy']);
+    Route::post('/user/filter', [UserController::class, 'filter']);
+    Route::post('/user/login', [UserController::class, 'login']);
+    Route::get('/user/revenue/{user_id}', [UserController::class, 'revenue']);
 
-// Contract Rent
-Route::get('/contracts', [ContractController::class, 'index']);
-Route::get('/contract/{contract_id}', [ContractController::class, 'show']);
-Route::post('/contract', [ContractController::class, 'store']);
-Route::put('/contract/{contract_id}', [ContractController::class, 'update']);
-Route::delete('/contract/{contract_id}', [ContractController::class, 'destroy']);
-Route::post('/contract/filter', [ContractController::class, 'filter']);
+    // Contract Rent
+    Route::get('/contracts', [ContractController::class, 'index']);
+    Route::get('/contract/{contract_id}', [ContractController::class, 'show']);
+    Route::post('/contract', [ContractController::class, 'store']);
+    Route::put('/contract/{contract_id}', [ContractController::class, 'update']);
+    Route::delete('/contract/{contract_id}', [ContractController::class, 'destroy']);
+    Route::post('/contract/filter', [ContractController::class, 'filter']);
 
-// Comment
-Route::get('/comments', [CommentController::class, 'index']);
-Route::get('/comment/{LICENSE_PLATE}', [CommentController::class, 'show']);
-Route::post('/comment', [CommentController::class, 'store']);
-Route::put('/comment', [CommentController::class, 'update']);
-Route::delete('/comment', [CommentController::class, 'destroy']);
-Route::post('/comment/filter', [CommentController::class, 'filter']);
+    // Comment
+    Route::get('/comments', [CommentController::class, 'index']);
+    Route::get('/comment/{LICENSE_PLATE}', [CommentController::class, 'show']);
+    Route::post('/comment', [CommentController::class, 'store']);
+    Route::put('/comment', [CommentController::class, 'update']);
+    Route::delete('/comment', [CommentController::class, 'destroy']);
+    Route::post('/comment/filter', [CommentController::class, 'filter']);
 
-// Company Revenue
-Route::get('/com_revenue/getDay/{dateString}', [CompanyRevenueController::class,'belongsToDay']);
-Route::get('/com_revenue/getMonth/{monthString}', [CompanyRevenueController::class,'belongsToMonth']);
-Route::get('/com_revenue/getYear/{yearString}', [CompanyRevenueController::class,'belongsToYear']);
+    // Company Revenue
+    Route::get('/com_revenue/getDay/{dateString}', [CompanyRevenueController::class, 'belongsToDay']);
+    Route::get('/com_revenue/getMonth/{monthString}', [CompanyRevenueController::class, 'belongsToMonth']);
+    Route::get('/com_revenue/getYear/{yearString}', [CompanyRevenueController::class, 'belongsToYear']);
 
-// GetTimer
-Route::get('/timer/{user_id}', [TimerController::class, 'getTimer']);
+    // GetTimer
+    Route::get('/timer/{user_id}', [TimerController::class, 'getTimer']);
 
-// Payment MOMO
-Route::post('/stripe_payment', [StripeController::class, 'session']);
+    // Bookmart
+    Route::get('/bookmark', [BookmarkController::class, 'index']);
+    Route::get('/bookmark/{user_id}', [BookmarkController::class, 'show']);
+    Route::post('/bookmark', [BookmarkController::class, 'store']);
+    Route::delete('/bookmark', [BookmarkController::class, 'destroy']);
+});
+// Car
